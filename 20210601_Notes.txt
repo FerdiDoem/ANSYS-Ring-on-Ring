@@ -1,0 +1,74 @@
+Last updated: 01.06.2021
+
++ = WHAT HAS BEEN DONE
+- = WHAT HAS TO BE DONE
+!- = SOLVED FOR FOLLOWING IMPLEMENTATION
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------
+
+Cell2DAxis_Model_v0.2.1 OUTDATED
++ minor bug fixes
++ some test features like mesh numbering for accessing via pyansys (EXPERIMENTAL)
+
+Cell2DAxis_Model_v0.3
++ Any Layer set to 0 is now ignored in SpaceClaim, Naming of layers follows still the name of the parameter
++ Is now uploaded as archive file
+
+.........................................................................................................................................
+
+Cell3D_Model_v0.2 OUTDATED
+	!- implementing curvature
+		#achieved with modelling similar to Cell2DAxis_Model_v0.2.1 in Cell3D_Model_v0.3
+	!- Naming Line Rings
+	+ implement in a workbench file
+
+Cell3D_Model_v0.3 OUTDATED 
+	+ implementing Line Rings again and Naming them
+	+ v3.2. hotfix Line Rings -> Support ring working now 
+	!- changing Naming and Layer Build-up to Cell2DAxis_Model_v0.3 approach
+
+Cell3D_Model_v0.3 OUTDATED 
+	+ Any Layer set to 0 is now ignored in SpaceClaim, Naming of layers follows still the name of the parameter
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------	
+
+2D_Connections_v0.1
+	+ Adds Contact Regions (frictionless between rings and sample/ bounded between layers)
+
+.........................................................................................................................................
+
+2D_Materials_v0.1
+	+ Assigns materials to layers and rings (Material has to be named with the correct prefix --> Layer1: LSCF => Material Name: "E1 LSCF" (without "")
+
+.........................................................................................................................................
+
+2D_Meshing_v0.1
+	+ Meshes Layers and Ring Contact areas with ElementSize=0,25t (can be easily changed in script)
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------
+
+3D_Connections_v0.1
+	+ WIP
+
+.........................................................................................................................................
+
+3D_Materials_v0.1
+	+ WIP
+
+.........................................................................................................................................
+
+3D_Meshing_v0.1
+	+ WIP
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------
+
+Wish list:
+	- Additional Options for approximated rings (like a face for pressure instead of force(Line Ring))
+	- streamline code
+	- colaps of all models into a unified
+	- solve issue with "uneven" symmetry (rotational) in Cell3D_Model; Model always assumes axissymmetry right now 
+
