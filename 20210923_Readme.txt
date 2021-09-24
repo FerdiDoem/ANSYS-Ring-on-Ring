@@ -1,0 +1,124 @@
+Last updated: 23.09.2021
+
++ = WHAT HAS BEEN DONE
+- = WHAT HAS TO BE DONE
+!- = SOLVED FOR FOLLOWING IMPLEMENTATION
+
+
+
+====== WORKBENCH ====================================================================================================================================
+
+
+Cell_2DAxissymmetric_v0.3.wbpj
+	+ Including Geometry "Cell2DAxis_Model_v0.3.1.scdoc"
+	+ Basic Post-Processing
+
+.........................................................................................................................................
+
+Cell_3DSolid_v0.3.wbpj
+	+ Including Geometry "Cell3D_Model_v0.3.4.scdoc"
+	+ Basic Post-Processing
+
+
+====== GEOMETRY =====================================================================================================================================
+
+
+Cell2DAxis_Model_v0.2.1.scdoc OUTDATED
+	+ minor bug fixes
+	+ some test features like mesh numbering for accessing via pyansys (EXPERIMENTAL)
+
+Cell2DAxis_Model_v0.3.scdoc OUTDATED
+	+ Any Layer set to 0 is now ignored in SpaceClaim, Naming of layers follows still the name of the parameter
+	+ Is now uploaded as archive file
+
+Cell2DAxis_Model_v0.3.1.scdoc
+	+ Curvatur Parameter is now distance to closest Ebene edge (measured from origin)\
+		before: Curvatur = Distance to E1(or lowest)_Edge_Bottom which resulted in asymmetry when comparing +-abs(curv)
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+
+Cell3D_Model_v0.2.scdoc OUTDATED
+	!- implementing curvature
+		#achieved with modelling similar to Cell2DAxis_Model_v0.2.1 in Cell3D_Model_v0.3
+	!- Naming Line Rings
+	+ implement in a workbench file
+
+Cell3D_Model_v0.3.2.scdoc OUTDATED 
+	+ implementing Line Rings again and Naming them
+	+ v3.2. hotfix Line Rings -> Support ring working now 
+	!- changing Naming and Layer Build-up to Cell2DAxis_Model_v0.3 approach
+
+Cell3D_Model_v0.3.3.scdoc OUTDATED 
+	+ Any Layer set to 0 is now ignored in SpaceClaim, Naming of layers follows still the name of the parameter
+	!- Line Rings Naming and Layer Build-up are buggy again
+	
+Cell3D_Model_v0.3.4.scdoc OUTDATED
+	+ Curvatur Parameter is now distance to closest Ebene edge (measured from origin); See Cell2DAxis_Model_v0.3.1
+	!- Line Rings Naming and Layer are buggy for singlelayer
+
+Cell3D_Model_v0.3.5.scdoc
+	+ Fixed Line Ring naming and imprinting issues by refering to the named selections directly (See code)
+	+ hotfix for support ring nameing when single layer
+
+====== ACT Scripts ==================================================================================================================================
+
+
+2D_Connections_v0.1.py
+	+ Adds Contact Regions (frictionless between rings and sample/ bounded between layers)
+
+.........................................................................................................................................
+
+2D_Materials_v0.1.py
+	+ Assigns materials to layers and rings (Material has to be named with the correct prefix 
+		--> Layer1: LSCF => Material Name: "E1 LSCF" (without "")
+
+.........................................................................................................................................
+
+2D_Meshing_v0.1.py
+	+ Meshes Layers and Ring Contact areas with ElementSize=0,5*t (can be easily changed in script)
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+
+3D_Connections_v0.1.py
+	+ same features as the 2D script
+	
+3D_Connections_v0.2.py
+	+ standard contact type for rings-to-Ebene is now frictional with FrctCoef= 0.1
+		-> Better convergence overall
+
+.........................................................................................................................................
+
+3D_Materials_v0.1.py
+	+ WIP
+
+.........................................................................................................................................
+
+3D_Meshing_v0.1.py
+	+ same features as the 2D script
+
+3D_Meshing_v0.2.py
+	+ removed sizing option. All sizes are now set to standard
+	+ Adding contact sizing to standard meshing generator
+	+ Added loadringrefinement sizing element when rings are approximated by lines
+	+ Added a MultiZone Meshing Option when rings are approximated by lines
+.........................................................................................................................................
+
+3D_Symmetry_v0.1.py
+	+ added basic symmetry features
+	+ added a match_control mesh option here
+	- sometimes issues with initialization when coordinate system is already scoped to a entitiy
+	- For MatchControl the faces cannot be assigned to named selections -> reseting for every geometric change
+
+====== WISH LIST ====================================================================================================================================
+
+
+Ferdinand Dömling
+	- Generic: Make a full english conversion and upload to gitHub
+	- Geometry: Additional Options for approximated rings (like a face for pressure instead of force(Line Ring), Modulation etc.)
+	- Geometry: streamline code
+	- Workbench: Separating the individual components of the modul into entities for more flexibility
+	- Workbench/Geometry: colaps of all models into a unified model (Using Python Classes?)
+	- Geometry: solve issue with "uneven" symmetry (rotational) in Cell3D_Model; Model always assumes axissymmetry right now
+	- Meshing: Add ROI (via Construction Bodies?) for more efficient meshing f.e. under the load ring 
+
