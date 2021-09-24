@@ -13,16 +13,18 @@ Model.Connections.AddConnectionGroup()
 ###Add SupportRingContact
 x=0
 if ConstructedRings[0] == 1:
-    Model.Connections.Children[0].AddContactRegion()
-    contact_SupportRing = Model.Connections.Children[0].Children[0]
-    E_Names = parts[0].Name + "_Face_Bottom"
-    SLoc = DataModel.GetObjectsByName(E_Names)
-    TLoc = DataModel.GetObjectsByName("SupportRing_Face_Radius")
-    contact_SupportRing.ContactType = ContactType.Frictionless
-    contact_SupportRing.SourceLocation = SLoc[0]
-    contact_SupportRing.TargetLocation = TLoc[0]
-    contact_SupportRing.InterfaceTreatment = ContactInitialEffect.AdjustToTouch
-    contact_SupportRing.Name = " to ".join(("SupportRing", parts[x].Name))
+        Model.Connections.Children[0].AddContactRegion()
+        contact_SupportRing = Model.Connections.Children[0].Children[0]
+        E_Names = parts[0].Name + "_Face_Bottom"
+        SLoc = DataModel.GetObjectsByName(E_Names)
+        TLoc = DataModel.GetObjectsByName("SupportRing_Face_Radius")
+        #Standard is now frictional, it seems to help with convergence
+        contact_SupportRing.ContactType = ContactType.Frictional
+        contact_SupportRing.FrictionCoefficient = 0.1
+        contact_SupportRing.SourceLocation = SLoc[0]
+        contact_SupportRing.TargetLocation = TLoc[0]
+        contact_SupportRing.InterfaceTreatment = ContactInitialEffect.AdjustToTouch
+        contact_SupportRing.Name = " to ".join(("SupportRing", parts[x].Name))
 ###Add Contacts Between Layers
 while parts.Count >1 and x < parts.Count-CountRings-1:
     Model.Connections.Children[0].AddContactRegion()
@@ -40,7 +42,9 @@ while parts.Count >1 and x < parts.Count-CountRings-1:
 if ConstructedRings[1] == 1:
     Model.Connections.Children[0].AddContactRegion()
     contact_LoadRing = Model.Connections.Children[0].Children[x+ConstructedRings[1]]
-    contact_LoadRing.ContactType = ContactType.Frictionless
+    #Standard is now frictional, it seems to help with convergence
+    contact_LoadRing.ContactType = ContactType.Frictional
+    contact_LoadRing.FrictionCoefficient = 0.1
     E_Names = parts[parts.Count-3].Name + "_Face_Top"
     SLoc = DataModel.GetObjectsByName(E_Names)
     TLoc = DataModel.GetObjectsByName("LoadRing_Face_Radius")
